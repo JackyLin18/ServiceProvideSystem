@@ -1,0 +1,47 @@
+#服务器环境
+server:
+  port: 8080
+  servlet:
+    context-path: /sps
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  datasource:
+    username: root
+    password: 987654321Jacky
+    url: jdbc:mysql://localhost/service_provide_sys?serverTimezone=UTC&useUnicode=true&allowMultiQueries=true&useAffectedRows=true&characterEncording=utf8mb4&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.mchange.v2.c3p0.ComboPooledDataSource
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+  mvc:
+    static-path-pattern: /**
+
+mybatis:
+  type-aliases-package: com.service_provide.jacky.model.entity
+
+
+# 分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true  # 合理化分页
+  supportMethodsArguments: true
+  params: count=countSql
+
+#日志
+logging:
+  file:
+    path: D:\log\ServiceProvideSystem
+  level:
+    root: debug
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+      logic-delete-value: 1
+      logic-not-delete-value: 0

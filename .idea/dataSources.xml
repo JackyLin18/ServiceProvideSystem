@@ -10,5 +10,20 @@
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="ServiveProvideSystem" uuid="e623d36e-0255-403e-bea7-98a6c1f1bc23">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost/service_provide_sys?serverTimezone=UTC&amp;useUnicode=true&amp;allowMultiQueries=true&amp;useAffectedRows=true&amp;characterEncording=utf8mb4&amp;serverTimezone=GMT%2B8</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="ServiveProvideSystem/Hibernate" uuid="bdc2b34f-298c-46be-9e0a-bf989c610e6f">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost/service_provide_sys?serverTimezone=UTC&amp;useUnicode=true&amp;allowMultiQueries=true&amp;useAffectedRows=true&amp;characterEncording=utf8mb4&amp;serverTimezone=GMT%2B8</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -1,0 +1,31 @@
+package com.service_provide.jacky.service;
+
+import com.service_provide.jacky.model.entity.ServiceProvider;
+import com.service_provide.jacky.model.vo.ServiceResult;
+
+public interface ServiceProviderService {
+    /**
+     * 添加、修改服务提供者
+     */
+    ServiceResult saveServiceProvider(ServiceProvider serviceProvider);
+
+    /**
+     * 删除服务提供者
+     */
+    ServiceResult removeServiceProviderById(Integer id);
+
+    /**
+     * 查询所有的服务提供者
+     */
+    ServiceResult getAllServiceProviders();
+
+    /**
+     * 模糊查询服务提供者
+     */
+    ServiceResult getOptionalServiceProviders(ServiceProvider serviceProvider);
+
+    /**
+     * 根据 id 拆线呢服务提供者
+     */
+    ServiceResult getServiceProviderById(Integer id);
+}

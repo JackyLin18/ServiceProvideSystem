@@ -10,6 +10,10 @@ import java.sql.Timestamp;
 public class Task {
     // 任务id
     private Integer id;
+    // 用户id
+    private Integer userId;
+    // 服务者id
+    private Integer providerId;
     // 任务名
     private String name;
     // 工作内容

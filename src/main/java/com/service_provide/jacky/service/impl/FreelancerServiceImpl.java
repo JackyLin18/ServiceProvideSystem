@@ -38,7 +38,7 @@ public class FreelancerServiceImpl implements FreelancerService {
                 return ServiceResult.fail().setMessage("更新信息失败");
             }
         }
-        return ServiceResult.ok();
+        return ServiceResult.ok("id", freelancer.getId());
     }
 
     @Override

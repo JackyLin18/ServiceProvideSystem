@@ -22,10 +22,15 @@ public interface ServiceProviderService {
     /**
      * 模糊查询服务提供者
      */
-    ServiceResult getOptionalServiceProviders(ServiceProvider serviceProvider);
+    ServiceResult getOptionalServiceProviders(ServiceProvider serviceProvider, Integer maxAge, Integer minAge);
 
     /**
-     * 根据 id 拆线呢服务提供者
+     * 根据 id 查询服务提供者
      */
     ServiceResult getServiceProviderById(Integer id);
+
+    /**
+     * 根据自由职业者 id 查询服务提供者
+     */
+    ServiceResult getServiceProviderByFreelancerId(Integer freelancerId);
 }

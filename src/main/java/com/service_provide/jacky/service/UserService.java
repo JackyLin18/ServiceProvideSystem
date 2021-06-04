@@ -12,5 +12,15 @@ public interface UserService {
     /**
      * 根据 id 删除用户
      */
+    ServiceResult removeUser(Integer id);
 
+    /**
+     * 根据 id 查用户
+     */
+    ServiceResult getUserById(Integer id);
+
+    /**
+     * 获取所有用户
+     */
+    ServiceResult getAllUsers();
 }

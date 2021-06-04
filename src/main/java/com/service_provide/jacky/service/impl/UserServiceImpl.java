@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
     private UserMapper userMapper;

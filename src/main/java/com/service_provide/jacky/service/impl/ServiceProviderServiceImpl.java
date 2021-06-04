@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("serviceProviderService")
 @Transactional
 public class ServiceProviderServiceImpl implements ServiceProviderService {
     private ServiceProviderMapper serviceProviderMapper;

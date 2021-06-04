@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("taskService")
 @Transactional
 public class TaskServiceImpl implements TaskService {
     private TaskMapper taskMapper;

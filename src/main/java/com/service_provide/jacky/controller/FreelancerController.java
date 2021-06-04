@@ -150,4 +150,36 @@ public class FreelancerController {
         }
         return JSONResponseEnum.OTHER_ERROR_RESPONSE.getResponseValue();
     }
+
+    /***
+     * 删除指定 id 的自由职业者
+     * @param id 需要删除的自由职业者的 id
+     */
+    @ResponseBody
+    @DeleteMapping
+    public JSONResponse deleteFreelancer(@RequestParam Integer id){
+        // 检查是否携带必要参数
+        if (id == null) {
+            return JSONResponseEnum.PARAMETER_MISSING_RESPONSE.getResponseValue();
+        }
+        ServiceResult serviceResult;
+        try{
+            serviceResult = freelancerService.removeFreelancerById(id);
+        }catch (Exception ex){
+            // 捕获异常并返回失败状态
+            ex.printStackTrace();
+            return JSONResponseEnum.DATABASE_ERROR_RESPONSE.getResponseValue();
+        }
+        // 获取状态码
+        Integer resultCode = serviceResult.getCode();
+        // 判断状态码
+        if (resultCode.equals(CodeEnum.SUCCESS.getCode())) {
+            // 状态码为成功
+            // 返回响应
+            return JSONResponseEnum.SUCCESS_WITHOUT_DATA_RESPONSE.getResponseValue();
+        } else {
+            // 返回响应
+            return JSONResponseEnum.NULL_RESULT_RESPONSE.getResponseValue();
+        }
+    }
 }

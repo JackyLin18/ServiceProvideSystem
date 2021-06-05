@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索服务提供者信息</title>
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<h3>搜索条件</h3>
+姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<label for="name"></label><input id="name"/><br/>
+年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄：
+<label for="min_age"></label><input type="text" size="6" id="min_age">~
+<label for="max_age"></label><input type="text" size="6" id="max_age">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br/>
+性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：
+<label><input type="radio" name="sex" value="1">男</label>
+<label><input type="radio" name="sex" value="2">女</label><br/>
+擅长领域：
+<label for="expert_scope"></label><input type="text" id="expert_scope"><br/>
+<input type="button" onclick="serviceProviderSearch()" value="搜索"/>
+<br/>
+<input type="button" style="position:absolute;top:10px;right:10px"
+       onclick="history.go(-1)"
+       value="返回主页">
+<table border="1">
+    <tbody id="serviceProvidersBody">
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "serviceProvider/all",
+            success: function (data) {
+                serviceProviders = data.data;
+                showServiceProviders(serviceProviders);
+            }
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function serviceProviderSearch() {
+        $("#studentsBody").html("");
+        var name = document.getElementById("name").value;
+        var min_age = document.getElementById("min_age").value;
+        var max_age = document.getElementById("max_age").value;
+        var sexRadio = document.getElementsByName("sex");
+        var sex;
+        for (var i = 0; i < sexRadio.length; i++) {
+            if (sexRadio[i].checked) {
+                sex = sexRadio[i].value;
+            }
+        }
+        var expert_scope = document.getElementById("expert_scope").value;
+
+        // 搜索服务提供者
+        var param = {
+            "name": name,
+            "min_age": min_age,
+            "max_age": max_age,
+            "sex": sex,
+            "expert_scope": expert_scope
+        };
+        $.ajax({
+            type: "GET",
+            url: 'serviceProvider/option',
+            data: {params: JSON.stringify(param)},
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                showServiceProviders(data.data);
+            }
+        });
+    }
+
+    function showServiceProviders(serviceProviders) {
+        var tableData = "<tr align='center'>" +
+            "<td width='60'>账号id</td>" +
+            "<td width='60'>姓名</td>" +
+            "<td width='60'>性别</td>" +
+            "<td width='60'>年龄</td>" +
+            "<td width='80'>电话号码</td>" +
+            "<td width='200'>擅长领域</td>" +
+            "<td width='200'>自我介绍</td>" +
+            "</tr>";
+        $("#serviceProvidersBody").html(tableData);
+        for (var i = 0; i < serviceProviders.length; i++) {
+            tableData += "<tr align='center'>";
+            tableData += "<td>" + serviceProviders[i].id + "</td>";
+            tableData += "<td>" + serviceProviders[i].name + "</td>";
+            tableData += "<td>" + (serviceProviders[i].sex == 0 ? '未知' :
+                (serviceProviders[i].sex == 1 ? '男' : '女')) + "</td>";
+            tableData += "<td>" + serviceProviders[i].age + "</td>";
+            tableData += "<td>" + serviceProviders[i].telNumber + "</td>";
+            tableData += "<td>" + serviceProviders[i].expertScope + "</td>";
+            tableData += "<td>" + serviceProviders[i].introduction + "</td>";
+            tableData += "</tr>";
+        }
+        $("#serviceProvidersBody").html(tableData);
+    }
+</script>
+</body>
+</html>

@@ -12,18 +12,28 @@ ID号：<label for="id"></label><input type="text" id="id"/><br/>
     <select id="role">
         <option value="1">用户</option>
         <option value="2">服务提供者</option>
-        <option value="3">自由失业者</option>
+        <option value="3">自由职业者</option>
     </select>
 </label>&nbsp;&nbsp;
-登录：<input type="button" value="登录" id="loginButton" onclick="login()"/><br/>
+<input type="button" value="登录" id="loginButton" onclick="login()"/><br/>
+<input type="button" value="注册为用户" id="registerButton1" onclick="register1()"/>
+<input type="button" value="注册为自由职业者" id="registerButton2" onclick="register2()"/><br/>
 </body>
 <script type="text/javascript">
     $(function () {
         history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', function(e) {
+        window.addEventListener('popstate', function (e) {
             history.pushState(null, null, document.URL);
         })
     });
+
+    function register1() {
+        window.location.href = "registerUser"
+    }
+
+    function register2() {
+        window.location.href = "registerFreelancer"
+    }
 
     function login() {
         var role = document.getElementById("role").value;
@@ -35,13 +45,13 @@ ID号：<label for="id"></label><input type="text" id="id"/><br/>
             $.ajax({
                 type: "POST",
                 url: 'login/serviceProvider',
-                data: {params:JSON.stringify(param)},
-                datatype:"json",
+                data: {params: JSON.stringify(param)},
+                datatype: "json",
                 success: function (data) {
-                    if(data.status === true){
+                    if (data.status === true) {
                         alert("登录成功");
                         // window.location.href="teacherMain";
-                    }else{
+                    } else {
                         alert("登录失败，请检查账号是否与密码对应！");
                     }
                 }
@@ -52,13 +62,13 @@ ID号：<label for="id"></label><input type="text" id="id"/><br/>
             $.ajax({
                 type: "POST",
                 url: 'login/user',
-                data: {params:JSON.stringify(param)},
-                datatype:"json",
+                data: {params: JSON.stringify(param)},
+                datatype: "json",
                 success: function (data) {
-                    if(data.status === true){
+                    if (data.status === true) {
                         alert("登录成功");
-                        // window.location.href="studentMain";
-                    }else{
+                        window.location.href="userMain";
+                    } else {
                         alert("登录失败，请检查账号是否与密码对应！");
                     }
                 }
@@ -69,13 +79,13 @@ ID号：<label for="id"></label><input type="text" id="id"/><br/>
             $.ajax({
                 type: "POST",
                 url: 'login/freelancer',
-                data: {params:JSON.stringify(param)},
-                datatype:"json",
+                data: {params: JSON.stringify(param)},
+                datatype: "json",
                 success: function (data) {
-                    if(data.status === true){
+                    if (data.status === true) {
                         alert("登录成功");
                         // window.location.href="administratorMain";
-                    }else{
+                    } else {
                         alert("登录失败，请检查账号是否与密码对应！");
                     }
                 }

@@ -63,6 +63,10 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
     @Override
     public ServiceResult getOptionalServiceProviders(ServiceProvider serviceProvider, Integer maxAge, Integer minAge) {
         QueryWrapper<ServiceProvider> wrapper = new QueryWrapper<>();
+        // 按姓名
+        if (serviceProvider.getName() != null) {
+            wrapper.like("name", serviceProvider.getName());
+        }
         // 按年龄
         if (maxAge != null) {
             wrapper.le("age", maxAge);
@@ -105,11 +109,11 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
 
     @Override
     public ServiceResult loginServiceProvider(Integer id, String inputPassword) {
-        if(ParamUtil.isParamNull(String.valueOf(id),inputPassword)){
+        if (ParamUtil.isParamNull(String.valueOf(id), inputPassword)) {
             return ServiceResult.fail(CodeEnum.NULL_PARAM);
         }
         String rightPassword = serviceProviderMapper.selectPassword(id);
-        if(inputPassword.equals(rightPassword)){
+        if (inputPassword.equals(rightPassword)) {
             return ServiceResult.ok();
         }
         return ServiceResult.fail().setMessage("密码错误");

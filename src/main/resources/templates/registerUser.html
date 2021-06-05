@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册为用户</title>
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<label for="name"></label><input type="text" id="name"/><br/>
+登录密码：<label for="password"></label><input type="password" id="password"/><br/>
+重复密码：<label for="re_password"></label><input type="password" id="re_password"/><br/>
+电话号码：<label for="tel_number"></label><input type="text" id="tel_number"/><br/>
+<input type="button" value="注册" onclick="registerUser()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="window.history.back(-1)">返回上一页</button>
+<script type="text/javascript">
+    function registerUser() {
+        var name = document.getElementById("name").value;
+        var password = document.getElementById("password").value;
+        var re_password = document.getElementById("re_password").value;
+        if(password != re_password){
+            alert("重复密码不正确！")
+            return;
+        }
+        var tel_number = document.getElementById("tel_number").value;
+        // 注册用户
+        var param = {
+            "name": name,
+            "password": password,
+            "tel_number": tel_number
+        };
+        $.ajax({
+            type: "POST",
+            url: 'user',
+            data: {params: JSON.stringify(param)},
+            datatype: "json",
+            success: function (data) {
+                if(data.status == true){
+                    alert("注册成功，获得的账号id为：" + data.data);
+                    window.location.href="login"
+                }else{
+                    alert("注册失败，原因："+data.message);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

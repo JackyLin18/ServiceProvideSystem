@@ -50,7 +50,7 @@ public class FreelancerController {
         freelancer.setName(name);
         // 获取密码
         String password = paramJSONObject.getString("password");
-        freelancer.setPassword("password");
+        freelancer.setPassword(password);
         // 获取身份证号码
         String idCardNumber = paramJSONObject.getString("id_card_number");
         freelancer.setIdCardNumber(idCardNumber);

@@ -15,6 +15,8 @@ public class ServiceProvider {
     private Integer freelancerId;
     // 服务者姓名
     private String name;
+    // 服务者登录密码
+    private String password;
     // 服务者联系方式
     private String telNumber;
     // 服务者年龄

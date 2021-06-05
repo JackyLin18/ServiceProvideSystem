@@ -48,10 +48,12 @@ public class UserController {
         // 获取name
         String name = paramJSONObject.getString("name");
         user.setName(name);
+        // 获取密码
+        String password = paramJSONObject.getString("password");
+        user.setPassword(password);
         // 获取电话号码
         String telNumber = paramJSONObject.getString("tel_number");
         user.setTelNumber(telNumber);
-
         ServiceResult serviceResult;
         try {
             // 保存user对象
@@ -147,5 +149,35 @@ public class UserController {
         return JSONResponseEnum.OTHER_ERROR_RESPONSE.getResponseValue();
     }
 
-    
+    /***
+     * @Author Jacky
+     * @Param id 指定的用户 id
+     * @Description 删除指定 id 的用户
+     **/
+    @ResponseBody
+    @DeleteMapping
+    public JSONResponse removeUser(@RequestParam Integer id){
+        // 检查是否携带必要参数
+        if (id == null) {
+            return JSONResponseEnum.NULL_PARAM_RESPONSE.getResponseValue();
+        }
+        ServiceResult serviceResult;
+        try {
+            serviceResult = userService.removeUser(id);
+        } catch (Exception ex) {
+            // 捕获异常返回失败状态
+            ex.printStackTrace();
+            return JSONResponseEnum.DATABASE_ERROR_RESPONSE.getResponseValue();
+        }
+        // 获取状态码
+        Integer resultCode = serviceResult.getCode();
+        // 判断状态码
+        if (resultCode.equals(CodeEnum.SUCCESS.getCode())) {
+            // 成功状态
+            return JSONResponseEnum.SUCCESS_WITHOUT_DATA_RESPONSE.getResponseValue();
+        } else {
+            // 失败状态
+            return JSONResponseEnum.FAIL_RESPONSE.getResponseValue();
+        }
+    }
 }

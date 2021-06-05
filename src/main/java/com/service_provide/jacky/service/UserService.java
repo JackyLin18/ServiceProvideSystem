@@ -23,4 +23,9 @@ public interface UserService {
      * 获取所有用户
      */
     ServiceResult getAllUsers();
+
+    /**
+     * 验证用户密码是否正确
+     **/
+    ServiceResult loginUser(Integer id,String inputPassword);
 }

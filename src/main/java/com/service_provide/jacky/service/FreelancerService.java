@@ -23,4 +23,9 @@ public interface FreelancerService {
      * 根据 id 查询指定的自由职业者
      */
     ServiceResult getFreelancerById(Integer id);
+
+    /**
+     * 验证自由职业者登录密码
+     **/
+    ServiceResult loginFreelancer(Integer id,String inputPassword);
 }

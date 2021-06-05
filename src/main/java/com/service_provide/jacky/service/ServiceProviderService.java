@@ -33,4 +33,9 @@ public interface ServiceProviderService {
      * 根据自由职业者 id 查询服务提供者
      */
     ServiceResult getServiceProviderByFreelancerId(Integer freelancerId);
+
+    /**
+     * 验证服务提供者密码
+     **/
+    ServiceResult loginServiceProvider(Integer id, String inputPassword);
 }

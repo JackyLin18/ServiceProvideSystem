@@ -5,6 +5,7 @@ import com.service_provide.jacky.mapper.FreelancerMapper;
 import com.service_provide.jacky.model.entity.Freelancer;
 import com.service_provide.jacky.model.vo.ServiceResult;
 import com.service_provide.jacky.service.FreelancerService;
+import com.service_provide.jacky.util.ParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,5 +66,17 @@ public class FreelancerServiceImpl implements FreelancerService {
             return ServiceResult.fail(CodeEnum.NULL_RESULT);
         }
         return ServiceResult.ok("freelancer", freelancer);
+    }
+
+    @Override
+    public ServiceResult loginFreelancer(Integer id, String inputPassword) {
+        if(ParamUtil.isParamNull(String.valueOf(id),inputPassword)){
+            return ServiceResult.fail(CodeEnum.NULL_PARAM);
+        }
+        String rightPassword = freelancerMapper.selectPassword(id);
+        if(inputPassword.equals(rightPassword)){
+            return ServiceResult.ok();
+        }
+        return ServiceResult.fail().setMessage("密码错误");
     }
 }

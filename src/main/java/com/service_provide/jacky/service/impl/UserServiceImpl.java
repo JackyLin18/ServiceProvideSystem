@@ -5,6 +5,7 @@ import com.service_provide.jacky.mapper.UserMapper;
 import com.service_provide.jacky.model.entity.User;
 import com.service_provide.jacky.model.vo.ServiceResult;
 import com.service_provide.jacky.service.UserService;
+import com.service_provide.jacky.util.ParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +64,17 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> data = new HashMap<>();
         data.put("users", users);
         return ServiceResult.ok().setData(data);
+    }
+
+    @Override
+    public ServiceResult loginUser(Integer id, String inputPassword) {
+        if(ParamUtil.isParamNull(String.valueOf(id),inputPassword)){
+            return ServiceResult.fail(CodeEnum.NULL_PARAM);
+        }
+        String rightPassword = userMapper.selectPassword(id);
+        if(inputPassword.equals(rightPassword)){
+            return ServiceResult.ok();
+        }
+        return ServiceResult.fail().setMessage("密码错误");
     }
 }

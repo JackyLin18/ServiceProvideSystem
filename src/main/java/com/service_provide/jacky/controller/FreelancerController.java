@@ -48,6 +48,9 @@ public class FreelancerController {
         // 获取name
         String name = paramJSONObject.getString("name");
         freelancer.setName(name);
+        // 获取密码
+        String password = paramJSONObject.getString("password");
+        freelancer.setPassword("password");
         // 获取身份证号码
         String idCardNumber = paramJSONObject.getString("id_card_number");
         freelancer.setIdCardNumber(idCardNumber);
@@ -157,15 +160,15 @@ public class FreelancerController {
      */
     @ResponseBody
     @DeleteMapping
-    public JSONResponse deleteFreelancer(@RequestParam Integer id){
+    public JSONResponse deleteFreelancer(@RequestParam Integer id) {
         // 检查是否携带必要参数
         if (id == null) {
             return JSONResponseEnum.PARAMETER_MISSING_RESPONSE.getResponseValue();
         }
         ServiceResult serviceResult;
-        try{
+        try {
             serviceResult = freelancerService.removeFreelancerById(id);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             // 捕获异常并返回失败状态
             ex.printStackTrace();
             return JSONResponseEnum.DATABASE_ERROR_RESPONSE.getResponseValue();

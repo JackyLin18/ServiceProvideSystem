@@ -9,7 +9,7 @@ server:
 spring:
   datasource:
     username: root
-    password: 987654321Jacky
+    password: 123456
     url: jdbc:mysql://localhost/service_provide_sys?serverTimezone=UTC&useUnicode=true&allowMultiQueries=true&useAffectedRows=true&characterEncording=utf8mb4&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.mchange.v2.c3p0.ComboPooledDataSource

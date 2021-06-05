@@ -8,6 +8,7 @@ import lombok.Data;
 public class Freelancer {
     private Integer id;
     private String name;
+    private String password;
     private String idCardNumber;
     private String familyAddress;
 }

@@ -6,6 +6,7 @@ import com.service_provide.jacky.mapper.ServiceProviderMapper;
 import com.service_provide.jacky.model.entity.ServiceProvider;
 import com.service_provide.jacky.model.vo.ServiceResult;
 import com.service_provide.jacky.service.ServiceProviderService;
+import com.service_provide.jacky.util.ParamUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,5 +101,17 @@ public class ServiceProviderServiceImpl implements ServiceProviderService {
         ServiceProvider serviceProvider = serviceProviderMapper.selectOne(wrapper);
         return serviceProvider == null ? ServiceResult.fail(CodeEnum.NULL_RESULT) :
                 ServiceResult.ok("serviceProvider", serviceProvider);
+    }
+
+    @Override
+    public ServiceResult loginServiceProvider(Integer id, String inputPassword) {
+        if(ParamUtil.isParamNull(String.valueOf(id),inputPassword)){
+            return ServiceResult.fail(CodeEnum.NULL_PARAM);
+        }
+        String rightPassword = serviceProviderMapper.selectPassword(id);
+        if(inputPassword.equals(rightPassword)){
+            return ServiceResult.ok();
+        }
+        return ServiceResult.fail().setMessage("密码错误");
     }
 }

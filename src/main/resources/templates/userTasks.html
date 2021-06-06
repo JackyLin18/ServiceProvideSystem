@@ -39,26 +39,50 @@
             "<td width='80'>开始时间</td>" +
             "<td width='80'>薪资酬劳</td>" +
             "<td width='400'>工作要求</td>" +
+            "<td>修改</td>" +
+            "<td>删除</td>" +
             "</tr>";
         $("#tasksBody").html(tableData);
         for (var i = 0; i < tasks.length; i++) {
             tableData += "<tr align='center'>";
             tableData += "<td>" + tasks[i].id + "</td>";
-            tableData += "<td>" + (tasks[i].name==null?'':tasks[i].name) + "</td>";
-            tableData += "<td>" + (tasks[i].content==null?'':tasks[i].content) + "</td>";
-            tableData += "<td>" + (tasks[i].place==null?'':tasks[i].place) + "</td>";
+            tableData += "<td>" + (tasks[i].name == null ? '' : tasks[i].name) + "</td>";
+            tableData += "<td>" + (tasks[i].content == null ? '' : tasks[i].content) + "</td>";
+            tableData += "<td>" + (tasks[i].place == null ? '' : tasks[i].place) + "</td>";
             if (tasks[i].startTime != null) {
                 var date = new Date(tasks[i].startTime);
                 tableData += "<td>" + date.getFullYear() + '-'
-                    + (date.getMonth()+1) + '-' + date.getDate() + "</td>";
-            }else{
+                    + (date.getMonth() + 1) + '-' + date.getDate() + "</td>";
+            } else {
                 tableData += "<td></td>";
             }
-            tableData += "<td>" + (tasks[i].repay==null?'':tasks[i].repay) + "</td>";
-            tableData += "<td>" + (tasks[i].taskRequire==null?'':tasks[i].taskRequire) + "</td>";
+            tableData += "<td>" + (tasks[i].repay == null ? '' : tasks[i].repay) + "</td>";
+            tableData += "<td>" + (tasks[i].taskRequire == null ? '' : tasks[i].taskRequire) + "</td>";
+            tableData += "<td>" + "<button style='color: green' onclick='updateTask(" + tasks[i].id + ")'>修改</button>";
+            tableData += "<td>" + "<button style='color: red' onclick='deleteTask(" + tasks[i].id + ")'>删除</button></td>";
             tableData += "</tr>";
         }
         $("#tasksBody").html(tableData);
+    }
+
+    function deleteTask(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "task",
+            data: {id: id},
+            success: function (data) {
+                if (data.status == true) {
+                    alert("操作成功");
+                    location.reload();
+                } else {
+                    alert("操作失败");
+                }
+            }
+        })
+    }
+
+    function updateTask(id) {
+        window.location.href = ("taskMessage?id=" + id);
     }
 </script>
 </body>

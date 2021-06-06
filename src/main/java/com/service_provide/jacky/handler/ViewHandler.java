@@ -2,6 +2,7 @@ package com.service_provide.jacky.handler;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +52,7 @@ public class ViewHandler {
     }
 
     @RequestMapping("/userTasks")
-    public String userTasks(HttpServletRequest request){
+    public String userTasks(HttpServletRequest request) {
         if (request.getSession().getAttribute("user") == null) {
             return "login";
         }
@@ -59,7 +60,7 @@ public class ViewHandler {
     }
 
     @RequestMapping("/freelancerMain")
-    public String freelancerMain(HttpServletRequest request){
+    public String freelancerMain(HttpServletRequest request) {
         if (request.getSession().getAttribute("freelancer") == null) {
             return "login";
         }
@@ -67,15 +68,22 @@ public class ViewHandler {
     }
 
     @RequestMapping("/certification")
-    public String certification(){
+    public String certification() {
         return "certification";
     }
 
     @RequestMapping("/registerServiceProvider")
-    public String registerServiceProvider(HttpServletRequest request){
+    public String registerServiceProvider(HttpServletRequest request) {
         if (request.getSession().getAttribute("freelancer") == null) {
             return "login";
         }
         return "registerServiceProvider";
+    }
+
+    @RequestMapping("/taskMessage")
+    public String taskMessage(HttpServletRequest request,
+                              @RequestParam Integer id) {
+        request.setAttribute("taskId", id);
+        return "taskMessage";
     }
 }

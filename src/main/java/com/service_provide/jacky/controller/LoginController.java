@@ -136,7 +136,9 @@ public class LoginController {
     @ResponseBody
     public JSONResponse logout(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.removeAttribute("loginObj");
+        session.removeAttribute("serviceProvider");
+        session.removeAttribute("freelancer");
+        session.removeAttribute("user");
         return JSONResponseEnum.SUCCESS_WITHOUT_DATA_RESPONSE.getResponseValue();
     }
 }

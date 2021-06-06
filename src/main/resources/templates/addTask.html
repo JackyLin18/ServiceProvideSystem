@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发布任务</title>
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+任务名称：<label for="name"></label><input type="text" id="name"/><br/>
+工作内容：<label for="content"></label><input type="text" id="content"/><br/>
+工作地点：<label for="place"></label><input type="text" id="place"/><br/>
+开始时间：<label for="start_time"></label><input type="date" id="start_time"/><br/>
+工作要求：<label for="require"></label><input type="text" id="require"/><br/>
+薪资报酬：<label for="repay"></label><input type="number" id="repay"/><br/>
+<input type="button" value="发布" onclick="addTask()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="window.history.back(-1)">返回上一页</button>
+
+<script type="text/javascript">
+    function addTask() {
+        var name = document.getElementById("name").value;
+        var content = document.getElementById("content").value;
+        var place = document.getElementById("place").value;
+        var start_time = document.getElementById("start_time").value;
+        var require = document.getElementById("require").value;
+        var repay = document.getElementById("repay").value;
+        // 发布任务
+        var param = {
+            "name": name,
+            "content": content,
+            "place": place,
+            "start_time": start_time,
+            "require": require,
+            "repay": repay
+        };
+        $.ajax({
+            type: "POST",
+            url: 'task',
+            data: {params: JSON.stringify(param)},
+            datatype: "json",
+            success: function (data) {
+                if(data.status == true){
+                    alert("发布任务成功")
+                    window.location.href="userMain";
+                }else{
+                    alert("发布失败，原因："+data.message);
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

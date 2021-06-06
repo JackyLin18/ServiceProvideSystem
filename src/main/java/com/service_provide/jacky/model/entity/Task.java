@@ -1,5 +1,7 @@
 package com.service_provide.jacky.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -9,6 +11,7 @@ import java.sql.Timestamp;
 @TableName("task")
 public class Task {
     // 任务id
+    @TableId(type = IdType.AUTO)
     private Integer id;
     // 用户id
     private Integer userId;
@@ -23,7 +26,7 @@ public class Task {
     // 工作开始时间
     private Timestamp startTime;
     // 工作要求
-    private String require;
+    private String taskRequire;
     // 工作酬劳
     private Double repay;
     // 工作状态（0为待接取，1为已被接取但未完成，2为已完成）

@@ -124,4 +124,15 @@ public class TaskServiceImpl implements TaskService {
         data.put("tasks", tasks);
         return ServiceResult.ok().setData(data);
     }
+
+    @Override
+    public ServiceResult getAllTasks() {
+        List<Task> tasks = taskMapper.selectList(null);
+        if (tasks.size() == 0) {
+            return ServiceResult.fail(CodeEnum.NULL_RESULT);
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("tasks", tasks);
+        return ServiceResult.ok().setData(data);
+    }
 }

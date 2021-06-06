@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>我的任务</title>
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<input type="hidden" th:value="${session.user.id}" id="user_id"/>
+<input type="button"
+       onclick="window.location.href='userMain'"
+       value="返回主页">
+<table border="1">
+    <tbody id="tasksBody">
+    </tbody>
+</table>
+<button onclick="window.location.href='addTask'">新增任务</button>
+<script type="text/javascript">
+    $(function () {
+        user_id = document.getElementById("user_id").value;
+        $.ajax({
+            type: "GET",
+            url: "task/user?userId=" + user_id,
+            success: function (data) {
+                tasks = data.data;
+                showTasks(tasks);
+            }
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function showTasks(tasks) {
+        var tableData = "<tr align='center'>" +
+            "<td width='50'>任务id</td>" +
+            "<td width='150'>任务名称</td>" +
+            "<td width='250'>工作内容</td>" +
+            "<td width='150'>工作地点</td>" +
+            "<td width='80'>开始时间</td>" +
+            "<td width='80'>薪资酬劳</td>" +
+            "<td width='400'>工作要求</td>" +
+            "</tr>";
+        $("#tasksBody").html(tableData);
+        for (var i = 0; i < tasks.length; i++) {
+            tableData += "<tr align='center'>";
+            tableData += "<td>" + tasks[i].id + "</td>";
+            tableData += "<td>" + (tasks[i].name==null?'':tasks[i].name) + "</td>";
+            tableData += "<td>" + (tasks[i].content==null?'':tasks[i].content) + "</td>";
+            tableData += "<td>" + (tasks[i].place==null?'':tasks[i].place) + "</td>";
+            if (tasks[i].startTime != null) {
+                var date = new Date(tasks[i].startTime);
+                tableData += "<td>" + date.getFullYear() + '-'
+                    + (date.getMonth()+1) + '-' + date.getDate() + "</td>";
+            }else{
+                tableData += "<td></td>";
+            }
+            tableData += "<td>" + (tasks[i].repay==null?'':tasks[i].repay) + "</td>";
+            tableData += "<td>" + (tasks[i].taskRequire==null?'':tasks[i].taskRequire) + "</td>";
+            tableData += "</tr>";
+        }
+        $("#tasksBody").html(tableData);
+    }
+</script>
+</body>
+</html>

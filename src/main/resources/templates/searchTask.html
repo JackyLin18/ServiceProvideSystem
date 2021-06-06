@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索任务</title>
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+<h3>搜索条件</h3>
+任务名称：<label for="name"></label><input id="name"/>
+<br/>
+薪资报酬：
+<label for="min_repay"></label><input type="text" size="6" id="min_repay">~
+<label for="max_repay"></label><input type="text" size="6" id="max_repay">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<br/>
+工作内容：
+<label for="content"></label><input type="text" id="content"><br/>
+工作地点：
+<label for="place"></label><input type="text" id="place"><br/>
+<input type="button" onclick="taskSearch()" value="搜索"/>
+<br/>
+<input type="button" style="position:absolute;top:10px;right:10px"
+       onclick="history.go(-1)"
+       value="返回主页">
+<table border="1">
+    <tbody id="tasksBody">
+    </tbody>
+</table>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: "GET",
+            url: "task/all",
+            success: function (data) {
+                tasks = data.data;
+                showTasks(tasks);
+            }
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function taskSearch() {
+        $("#tasksBody").html("");
+        var name = document.getElementById("name").value;
+        var min_repay = document.getElementById("min_repay").value;
+        var max_repay = document.getElementById("max_repay").value;
+        var content = document.getElementById("content").value;
+        var place = document.getElementById("place").value;
+
+        // 搜索任务
+        var param = {
+            "name": name,
+            "min_repay": min_repay,
+            "max_repay": max_repay,
+            "content": content,
+            "place": place
+        };
+        $.ajax({
+            type: "GET",
+            url: 'task/option',
+            data: {params: JSON.stringify(param)},
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                showTasks(data.data);
+            }
+        });
+    }
+
+    function showTasks(tasks) {
+        var tableData = "<tr align='center'>" +
+            "<td width='30'>任务id</td>" +
+            "<td width='60'>任务名称</td>" +
+            "<td width='100'>工作内容</td>" +
+            "<td width='100'>工作地点</td>" +
+            "<td width='60'>开始时间</td>" +
+            "<td width='40'>薪资酬劳</td>" +
+            "<td width='200'>工作要求</td>" +
+            "</tr>";
+        $("#tasksBody").html(tableData);
+        for (var i = 0; i < tasks.length; i++) {
+            tableData += "<tr align='center'>";
+            tableData += "<td>" + tasks[i].id + "</td>";
+            tableData += "<td>" + tasks[i].name + "</td>";
+            tableData += "<td>" + tasks[i].content + "</td>";
+            tableData += "<td>" + tasks[i].place + "</td>";
+            tableData += "<td>" + tasks[i].startTime + "</td>";
+            tableData += "<td>" + tasks[i].repay + "</td>";
+            tableData += "<td>" + tasks[i].taskRequire + "</td>";
+            tableData += "</tr>";
+        }
+        $("#tasksBody").html(tableData);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
+    <title th:text="'用户'+${session.freelancer.name}+'的实名认证信息'"></title>
+</head>
+<body>
+账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：&nbsp;<label for="id"></label><input readonly="readonly" id="id" th:value="${session.freelancer.id}"/><br/>
+姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<label>
+    <input type="text" th:value="${session.freelancer.name}" id="name">
+</label><br/>
+身份证号：<label>
+    <input type="text" th:value="${session.freelancer.idCardNumber}" id="id_card_number">
+</label><br/>
+家庭地址：<label>
+    <input type="text" th:value="${session.freelancer.familyAddress}" id="family_address">
+</label><br/>
+密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：&nbsp;<label for="password"></label><input type="password"
+                                                                                              id="password"/><br/>
+重复密码：&nbsp;<label for="rePassword"></label><input type="password" id="rePassword"/><br/>
+<input type="button" value="认证" onclick="updateUser()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" onclick="window.location.href='freelancerMain'" value="返回主页">
+
+<script type="text/javascript">
+    function updateUser() {
+        var password = document.getElementById("password").value;
+        var rePassword = document.getElementById("rePassword").value;
+        if (password !== rePassword) {
+            alert("重复密码不正确");
+            return;
+        }
+        if (password === "") {
+            password = null;
+        }
+
+        var id = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        var id_card_number = document.getElementById("id_card_number").value;
+        var family_address = document.getElementById("family_address").value;
+
+        // 修改user
+        var param = {
+            "password": password, "name": name,
+            "id": id, "id_card_number": id_card_number,
+            "family_address": family_address
+        };
+        $.ajax({
+            type: "PUT",
+            url: 'freelancer',
+            data: {params: JSON.stringify(param)},
+            datatype: "json",
+            success: function (data) {
+                console.log(data);
+                window.location.href = "freelancerMain";
+            }
+        });
+    }
+</script>
+</body>
+</html>

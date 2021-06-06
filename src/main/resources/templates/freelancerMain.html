@@ -2,29 +2,18 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户主页</title>
+    <title>自由职业者主页</title>
     <script type="text/javascript" src="/sps/js/jquery-3.4.1.js"></script>
 </head>
 <body>
-<h1>欢迎你，用户&nbsp;&nbsp;<span th:text="${session.user.name}"></span>&nbsp;&nbsp;进入系统</h1>
+<h1>欢迎你，&nbsp;&nbsp;<span th:text="${session.freelancer.name}"></span>&nbsp;&nbsp;进入系统</h1>
 <h3>你可以进行以下操作：</h3>
-<button onclick="ownMessage()">个人信息</button>
+<button onclick="window.location.href='certification'">实名认证</button>
 <br/>
-<button onclick="document.location.href='addTask'">发布任务</button>
-<button onclick="document.location.href='userTasks'">我的任务</button>
-<br/>
-<button onclick="searchServiceProvider()">查找服务提供者</button>
+<button onclick="window.location.href='registerServiceProvider'">注册为服务提供者</button>
 <br/>
 <button onclick="logout()" style="color: red">退出登录</button>
 <script type="text/javascript">
-    function ownMessage() {
-        document.location.href = "userOwnMessage";
-    }
-
-    function searchServiceProvider() {
-        document.location.href = "searchServiceProvider";
-    }
-
     function logout() {
         $.ajax({
             type: "GET",

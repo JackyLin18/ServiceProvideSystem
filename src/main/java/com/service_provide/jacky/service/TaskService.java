@@ -38,4 +38,9 @@ public interface TaskService {
      * 模糊查询任务
      */
     ServiceResult getOptionalTasks(Task task, Double maxRepay, Double minRepay);
+
+    /**
+     * 查询所有任务
+     */
+    ServiceResult getAllTasks();
 }
